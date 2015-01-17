@@ -10,7 +10,7 @@ void setup(void) {
 }
 
 int HighByte, LowByte, TReading, SignBit, Tc_100, Whole, Fract;
-char buf[20];
+char buf[30];
 
 void loop(void) {
   byte i;
@@ -24,22 +24,23 @@ void loop(void) {
       ds.reset_search();
       return;
   }
-
+  /*
   Serial.print("R=");
   for( i = 0; i < 8; i++) {
     Serial.print(addr[i], HEX);
     Serial.print(" ");
   }
+  */
 
-  if ( OneWire::crc8( addr, 7) != addr[7]) {
+  if (OneWire::crc8( addr, 7) != addr[7]) {
       Serial.print("CRC is not valid!\n");
       return;
   }
-
-  if ( addr[0] == 0x10) {
+  /*
+  if (addr[0] == 0x10) {
       Serial.print("Device is a DS18S20 family device.\n");
   }
-  else if ( addr[0] == 0x28) {
+  else if (addr[0] == 0x28) {
       Serial.print("Device is a DS18B20 family device.\n");
   }
   else {
@@ -47,6 +48,7 @@ void loop(void) {
       Serial.println(addr[0],HEX);
       return;
   }
+  */
 
   ds.reset();
   ds.select(addr);
@@ -64,8 +66,10 @@ void loop(void) {
   //Serial.print(" ");
   for ( i = 0; i < 9; i++) {           // we need 9 bytes
     data[i] = ds.read();
+    /*
     Serial.print(data[i], HEX);
     Serial.print(" ");
+    */
   }
   //Serial.print(" CRC=");
   //Serial.print( OneWire::crc8( data, 8), HEX);
@@ -83,11 +87,12 @@ void loop(void) {
   Whole = Tc_100 / 100;  // separate off the whole and fractional portions
   Fract = Tc_100 % 100;
 
-  Serial.println();
+  //Serial.println();
   //sprintf(buf, "%d:%c%d.%d\337C     ",sensor,SignBit ? '-' : '+', Whole, Fract < 10 ? 0 : Fract);
-  sprintf(buf, "%c%d.%d\337C", SignBit ? '-' : '+', Whole, Fract < 10 ? 0 : Fract);
-
+  //sprintf(buf, "%c%d.%d°C", SignBit ? '-' : '+', Whole, Fract < 10 ? 0 : Fract);
+  //sprintf(buf, "{'temp': '%c%d.%d°C'}", SignBit ? '-' : '+', Whole, Fract < 10 ? 0 : Fract);
+  sprintf(buf, "%c%d.%d", SignBit ? '-' : '+', Whole, Fract < 10 ? 0 : Fract);
   Serial.println(buf);
 
-  Serial.println();
+  //Serial.println();
 }
