@@ -42,4 +42,4 @@ $ screen /dev/ttyUSB0
 
 ## Bluetooth
 
-You can use a Bluetooth module conected to the serial port to get the temperature remotely.
+You can use a Bluetooth module connected to the serial port to get the temperature remotely.
