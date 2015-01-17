@@ -43,3 +43,19 @@ $ screen /dev/ttyUSB0
 ## Bluetooth
 
 You can use a Bluetooth module connected to the serial port to get the temperature remotely.
+
+
+## Plot the data using GNUPlot
+
+First you will need to capture the list of temperatures returned by the Arduino
+
+
+```bash 
+$ cat /dev/ttyUSB0 > temperatures.txt
+```
+
+Then we will do some processing, removing empty lines and any null character on the file with the data, we use the temperature file line number as the value for the X axis and finaly plot and show the generated PNG image. Check the file plot.gplot if you want to change the generated image.
+
+```bash 
+$ cat temperatures.txt | sed '/^$/d' | tr -d '\0' | awk '{ print FNR "\t" $1 }' > temperatures.data && gnuplot plot.gplot && display file.png
+```

@@ -1,0 +1,3 @@
+set term png size 1024,768 enhanced
+set output 'file.png'
+plot "temperatures.data" using 1:2 title "Temperature"
